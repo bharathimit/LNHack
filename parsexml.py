@@ -2,6 +2,8 @@ from __future__ import division
 from bs4 import BeautifulSoup
 import os
 from rake_tutorial import extractWords
+import io
+import ntpath
 
 
 catchPhrasesDict = {}
@@ -24,7 +26,7 @@ def extractContent(filePath):
 
 
 
-for root, dirs, files in os.walk("dataset_training", topdown=False):
+for root, dirs, files in os.walk("/home/kjani/Desktop/LexisNexis/test_data", topdown=False):
     for name in files:
         # print(os.path.join(root, name))
         extractContent(os.path.join(root, name))
@@ -67,22 +69,52 @@ print summary_word_lengths
 # print max_value
 
 
+
+## For training the model
+# for key, value in sentencesFromSource.iteritems():
+#     print(os.path.basename(key))
+#     extracted_words, summary = extractWords(value[0], 5, 3, 4, len(value[0])*0.01)
+#     extracted_word_list = []
+#     [extracted_word_list.append(x[0]) for x in extracted_words]
+#     extracted_word_list = set([item for sublist in extracted_word_list for item in sublist])
+  
+
+
+#     training_keywords = [x.split() for x in catchPhrasesDict[key]]
+#     training_keywords = set([item for sublist in training_keywords for item in sublist])
+
+#     subtracted_list = training_keywords - extracted_word_list
+#     matching = len(training_keywords) - len(subtracted_list)
+#     print (matching/len(training_keywords))
+#     # print len(training_keywords)
+#     print '------------------------------------------------'
+
 for key, value in sentencesFromSource.iteritems():
-
-    extracted_words = extractWords(value[0], 5, 3, 4, len(value[0])*0.1)
+    print(os.path.basename(key))
+    extracted_words, summary = extractWords(value[0], 5, 3, 4, len(value[0])*0.01)
     extracted_word_list = []
-    [extracted_word_list.append(x[0].split()) for x in extracted_words]
-    extracted_word_list = set([item for sublist in extracted_word_list for item in sublist])
+    [extracted_word_list.append(x[0]) for x in extracted_words]
+    # extracted_word_list = set([item for sublist in extracted_word_list for item in sublist])
 
-    training_keywords = [x.split() for x in catchPhrasesDict[key]]
-    training_keywords = set([item for sublist in training_keywords for item in sublist])
+    keyphraseFile = io.open('/home/kjani/Desktop/LexisNexis/catchPhrases/' + os.path.basename(key), 'w')
+    
+    keyphraseFile.write(u'CatchPhrases:'+"\n")
+    for keyphrase in extracted_word_list:
+        keyphraseFile.write(keyphrase + "\n")
+    keyphraseFile.write(u'==============================================================================================================='+"\n")
+    keyphraseFile.write(u'Summary:'+"\n")
+    keyphraseFile.write(summary + "\n")
+    keyphraseFile.close()
 
-    subtracted_list = training_keywords - extracted_word_list
-    matching = len(training_keywords) - len(subtracted_list)
-    print (matching/len(training_keywords))
-    # print len(training_keywords)
-    print '------------------------------------------------'
-    break
+
+    # training_keywords = [x.split() for x in catchPhrasesDict[key]]
+    # training_keywords = set([item for sublist in training_keywords for item in sublist])
+
+    # subtracted_list = training_keywords - extracted_word_list
+    # matching = len(training_keywords) - len(subtracted_list)
+    # print (matching/len(training_keywords))
+    # # print len(training_keywords)
+    # print '------------------------------------------------'
 
 
 

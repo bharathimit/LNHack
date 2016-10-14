@@ -28,10 +28,11 @@ def extractWords(sentence, min_char_len, max_word_length, min_frq, summary_word_
 
     summary = summarizer.summarize(sentence, words=summary_word_length)
 
-    # summary2 = textrank.extractSentences(sentence)
+    #summary2 = textrank.extractSentences(sentence)
 
-    # print(summary)
-    # print(summary2)
+    #print(summary)
+    print("############################################")
+    #print(summary2)
 
     # return keywords
 
@@ -94,9 +95,9 @@ def extractWords(sentence, min_char_len, max_word_length, min_frq, summary_word_
 
     sortedKeywords = sorted(six.iteritems(keywordcandidates), key=operator.itemgetter(1), reverse=True)
     totalKeywords = len(sortedKeywords)
-    sortedKeywords = sortedKeywords[:20]
+    sortedKeywords = sortedKeywords[:15]
 
-    return sortedKeywords
+    return sortedKeywords, summary
     #
     # for example, you could just take the top third as the final keywords
     # for keyword in sortedKeywords[0:int(totalKeywords / keyword_shortlist_length)]:
