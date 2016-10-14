@@ -90,7 +90,7 @@ print summary_word_lengths
 #     print '------------------------------------------------'
 
 for key, value in sentencesFromSource.iteritems():
-    print(os.path.basename(key))
+    print("~~~~ processing file:  "+os.path.basename(key)+"  ~~~~")
     extracted_words, summary = extractWords(value[0], 5, 3, 4, len(value[0])*0.01)
     extracted_word_list = []
     [extracted_word_list.append(x[0]) for x in extracted_words]

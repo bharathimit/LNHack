@@ -31,6 +31,8 @@ def extractWords(sentence, min_char_len, max_word_length, min_frq, summary_word_
     #summary2 = textrank.extractSentences(sentence)
 
     #print(summary)
+    print("~~~~ generating Catchphrases ~~~~")
+    print("~~~~ generating Summary ~~~~")
     print("############################################")
     #print(summary2)
 
