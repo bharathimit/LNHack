@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import os
+from rake_tutorial import extractWords
 
 catchPhrasesDict = {}
 sentencesFromSource = {}
@@ -26,9 +27,17 @@ for root, dirs, files in os.walk("dataset_training", topdown=False):
         # print(os.path.join(root, name))
         extractContent(os.path.join(root, name))
 
-for key, value in catchPhrasesDict.iteritems():
-    print key
-    print value
+# for key, value in catchPhrasesDict.iteritems():
+#     print key
+#     print value
 
 for key, value in sentencesFromSource.iteritems():
-    print key, value
+    extracted_words = extractWords(value[0], 5, 3, 4, len(value[0])*0.1)
+    extracted_words = [x[0] for x in extracted_words]
+    print extracted_words
+    print catchPhrasesDict[key]
+    print "-----------------------------------------------------------"
+    break
+
+
+
