@@ -1,6 +1,8 @@
+from __future__ import division
 from bs4 import BeautifulSoup
 import os
 from rake_tutorial import extractWords
+
 
 catchPhrasesDict = {}
 sentencesFromSource = {}
@@ -31,13 +33,58 @@ for root, dirs, files in os.walk("dataset_training", topdown=False):
 #     print key
 #     print value
 
+
+summary_word_lengths = min_char_lens = max_word_lengths = min_frqs = range(5, 0, -1)
+print summary_word_lengths
+
+# max_value = 0
+# key = "dataset_training/06_11.xml"
+# value = sentencesFromSource[key]
+#
+# for min_char_len in min_char_lens:
+#     for max_word_length in max_word_lengths:
+#         for min_frq in min_frqs:
+#             for summary_word_length in summary_word_lengths:
+#                 extracted_words = extractWords(value[0], min_char_len, max_word_length, min_frq, len(value[0])*summary_word_length/10)
+#                 extracted_word_list = []
+#                 [extracted_word_list.append(x[0].split()) for x in extracted_words]
+#                 extracted_word_list = set([item for sublist in extracted_word_list for item in sublist])
+#
+#                 training_keywords = [x.split() for x in catchPhrasesDict[key]]
+#                 training_keywords = set([item for sublist in training_keywords for item in sublist])
+#
+#                 subtracted_list = training_keywords - extracted_word_list
+#                 matching = len(training_keywords) - len(subtracted_list)
+#                 print matching
+#                 result = (matching/len(training_keywords))
+#                 print result
+#                 print min_char_len, max_word_length, min_frq, summary_word_length
+#                 if(result > max_value):
+#                     max_value = result
+#                 # print len(training_keywords)
+#                 print '------------------------------------------------'
+#
+# print max_value
+
+
 for key, value in sentencesFromSource.iteritems():
+
     extracted_words = extractWords(value[0], 5, 3, 4, len(value[0])*0.1)
-    extracted_words = [x[0] for x in extracted_words]
-    print extracted_words
-    print catchPhrasesDict[key]
-    print "-----------------------------------------------------------"
+    extracted_word_list = []
+    [extracted_word_list.append(x[0].split()) for x in extracted_words]
+    extracted_word_list = set([item for sublist in extracted_word_list for item in sublist])
+
+    training_keywords = [x.split() for x in catchPhrasesDict[key]]
+    training_keywords = set([item for sublist in training_keywords for item in sublist])
+
+    subtracted_list = training_keywords - extracted_word_list
+    matching = len(training_keywords) - len(subtracted_list)
+    print (matching/len(training_keywords))
+    # print len(training_keywords)
+    print '------------------------------------------------'
     break
+
+
 
 
 
